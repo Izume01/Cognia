@@ -23,7 +23,7 @@ A minimal and elegant second brain — built to help you think clearly, capture 
 
 1.  **Clone the repository:**
     ```bash
-    git clone [https://github.com/yourusername/cognia.git](https://github.com/yourusername/cognia.git)
+    git clone [git@github.com:Izume01/Cognia.git](git@github.com:Izume01/Cognia.git)
     cd cognia
     ```
 
@@ -47,4 +47,4 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 ---
 
-*Built by [Your Name] ([@yourhandle](https://github.com/yourhandle))*
+*Built by izume01 ([@izume01](https://github.com/izume01))*
