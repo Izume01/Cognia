@@ -7,8 +7,8 @@ function App() {
       <Routes>
           <Route path="/" element={<div>
             <Card 
-              title="How to Build a Second Brain"
-              content="The best way of building a second brain is by capturing your thoughts, organizing ideas with tools like Notion or Obsidian, and making them easily retrievable for future use. This allows you to think more clearly and creatively. 🚀"
+              title="How to beat procrastination"
+              content="The best way to beat procrastination is to break tasks into smaller, manageable parts. Start with the easiest part to build momentum. Use tools like Pomodoro technique to stay focused. Remember, progress is better than perfection!"
               tag={["Productivity", "Second Brain"]}
               date={new Date()}
               type="document"

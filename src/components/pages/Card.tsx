@@ -1,106 +1,110 @@
 type ContentType = 'document' | 'tweets' | 'video' | 'links';
 
-import {Book , Video , Link , X, Share, Delete} from 'lucide-react'
+import { Book, Video, Link, X, Share, Delete } from 'lucide-react';
 import clsx from 'clsx';
 import { useMemo, type FC } from 'react';
 
 interface cardProps {
-    title: string,
-    content: string,
-    tag: string[],
-    date: Date,
-    type: ContentType
+  title: string;
+  content: string;
+  tag: string[];
+  date: Date;
+  type: ContentType;
 }
 
-export const Card : FC<cardProps> = (props) => {
+export const Card: FC<cardProps> = (props) => {
+  // Dark-themed pastel colors for tags with better contrast on dark background
+  const randomColor = () => {
+    const color = [
+      'bg-blue-800 text-blue-300',
+      'bg-green-800 text-green-300',
+      'bg-purple-800 text-purple-300',
+      'bg-red-800 text-red-300',
+      'bg-yellow-800 text-yellow-300',
+      'bg-pink-800 text-pink-300',
+      'bg-orange-800 text-orange-300',
+      'bg-teal-800 text-teal-300',
+      'bg-indigo-800 text-indigo-300',
+      'bg-gray-800 text-gray-300',
+    ];
+    return color[Math.floor(Math.random() * color.length)];
+  };
 
-    const randomColor = () => {
-        const color = ['bg-blue-100', 'bg-green-100', 'bg-purple-100', 'bg-red-100', 'bg-yellow-100' , 'bg-pink-100', 'bg-orange-100', 'bg-teal-100', 'bg-indigo-100', 'bg-gray-100'];
-        return color[Math.floor(Math.random() * color.length)];
+  // Memoize colors for tags to avoid flickering
+  const memoizedRandomColor = useMemo(() => {
+    return props.tag.map(() => randomColor());
+  }, [props.tag]);
+
+  // Icon with lighter colors for dark background
+  const getIcon = (type: ContentType) => {
+    const baseClass = 'w-6 h-6 text-gray-300';
+    switch (type) {
+      case 'document':
+        return <Book className={baseClass} />;
+      case 'tweets':
+        return <X className={baseClass} />;
+      case 'video':
+        return <Video className={baseClass} />;
+      case 'links':
+        return <Link className={baseClass} />;
+      default:
+        return <Book className={baseClass} />;
     }
+  };
 
-    /*
-      *  Memoize the random color for each tag
-      *  @param tag : string[]
-      @returns : string[]
-      @example : memoizedRandomColor(['tag1', 'tag2']) => ['bg-blue-100', 'bg-green-100']
-      @note : This is used to generate a random color for each tag
-      @note : This is used to prevent the random color from changing on every render
-    */
-    const memoizedRandomColor = useMemo(() => {
-        return props.tag.map(() => randomColor());
-    } , [props.tag]);
+  // Date formatting unchanged
+  const formatDate = (date: Date) => {
+    const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric' };
+    return date.toLocaleDateString('en-US', options);
+  };
 
-
-
-    const getIcon = (type : ContentType) => {
-        switch(type) {
-            case 'document':
-                return <Book className="w-6 h-6 text-blue-500" />
-            case 'tweets':
-                return <X className="w-6 h-6 text-blue-500" />
-            case 'video':
-                return <Video className="w-6 h-6 text-blue-500" />
-            case 'links':
-                return <Link className="w-6 h-6 text-blue-500" />
-            default:
-                return <Book className="w-6 h-6 text-blue-500" />
-        }
-    }
-
-    /*
-        Format the date to a readable format
-        @param date : Date
-        @returns : string
-        @example : formatDate(new Date()) => "January 1, 2023"
-    */
-    const formatDate = (date : Date) => {
-        const options : Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric' };
-        return date.toLocaleDateString('en-US', options);
-    }
-
-    return (
-        <div className="p-4 bg-white rounded-xl  space-y-4 max-w-md m-3 border-2 border-gray-200">
-            {/* Title */}
-            <div className="text-2xl font-bold text-gray-800 flex items-center justify-between">
-                {/* icon of the type */}
-                <div className="flex items-center justify-center w-10 h-10 rounded-full bg-blue-100">
-                    {getIcon(props.type)} 
-                </div>
-                {/* Title of the card */}
-                <span className="text-gray-800 font-bold text-xl line-clamp-1">{props.title}</span>  
-
-                {/* Sharing and delete buttons */}
-                <div className='flex items-center justify-center'>   
-                    <button className="text-gray-500 hover:text-gray-700">
-                        <Share className="w-6 h-6 text-blue-700" />
-                    </button>
-                    <button className="text-gray-500 hover:text-gray-700 ml-2">
-                        <Delete className="w-6 h-6 text-red-600" />
-                    </button>
-                </div>
-            </div>
-
-            {/* Contents */}
-            <div className="text-gray-700 text-base leading-relaxed line-clamp-4">
-                {props.content}
-            </div>
-
-            {/* Tags */}
-            <div className="flex flex-wrap gap-2">
-                {props.tag.map((tag , index) => {
-                    return (
-                        <span key={index} className={clsx(memoizedRandomColor[index], "text-sm text-gray-700 px-2 py-1 rounded-full")}>
-                            {tag}
-                        </span>
-                    )
-                })}
-            </div>
-
-            {/* Dates */}
-            <div className="text-sm text-gray-500">
-                Created: {formatDate(props.date)} • Last Updated: {formatDate(new Date())}
-            </div>
+  return (
+    <div className="p-5 bg-gray-900 rounded-xl max-w-md m-3 border border-gray-700 shadow-lg">
+      {/* Header */}
+      <div className="flex items-center justify-between mb-3">
+        {/* Icon */}
+        <div className="flex items-center justify-center w-10 h-10 rounded-full bg-gray-800">
+          {getIcon(props.type)}
         </div>
-    )
-}
+        {/* Title */}
+        <h2 className="flex-1 text-lg font-semibold text-gray-100 px-4 truncate">
+          {props.title}
+        </h2>
+        {/* Actions */}
+        <div className="flex gap-3 text-gray-400 hover:text-gray-200 cursor-pointer">
+          <button aria-label="Share">
+            <Share className="w-5 h-5" />
+          </button>
+          <button aria-label="Delete">
+            <Delete className="w-5 h-5 text-red-500 hover:text-red-400" />
+          </button>
+        </div>
+      </div>
+
+      {/* Content */}
+      <p className="text-gray-300 text-sm leading-relaxed line-clamp-4 mb-4">
+        {props.content}
+      </p>
+
+      {/* Tags */}
+      <div className="flex flex-wrap gap-2 mb-4">
+        {props.tag.map((tag, index) => (
+          <span
+            key={index}
+            className={clsx(
+              'px-3 py-1 rounded-full text-xs font-medium select-none',
+              memoizedRandomColor[index]
+            )}
+          >
+            {tag}
+          </span>
+        ))}
+      </div>
+
+      {/* Dates */}
+      <div className="text-xs text-gray-500 select-none">
+        Created: {formatDate(props.date)} • Last Updated: {formatDate(new Date())}
+      </div>
+    </div>
+  );
+};
