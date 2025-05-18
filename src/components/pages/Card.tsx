@@ -1,10 +1,10 @@
-type ContentType = 'document' | 'tweets' | 'video' | 'links';
-
+import { useMemo, type FC } from 'react';
 import { Book, Video, Link, X, Share, Delete } from 'lucide-react';
 import clsx from 'clsx';
-import { useMemo, type FC } from 'react';
 
-interface cardProps {
+type ContentType = 'document' | 'tweets' | 'video' | 'links';
+
+interface CardProps {
   title: string;
   content: string;
   tag: string[];
@@ -12,7 +12,7 @@ interface cardProps {
   type: ContentType;
 }
 
-export const Card: FC<cardProps> = (props) => {
+export const Card: FC<CardProps> = (props) => {
   // Dark-themed pastel colors for tags with better contrast on dark background
   const randomColor = () => {
     const color = [
@@ -59,11 +59,11 @@ export const Card: FC<cardProps> = (props) => {
   };
 
   return (
-    <div className="p-5 bg-gray-900 rounded-xl max-w-md m-3 border border-gray-700 shadow-lg">
+    <div className="p-5 bg-gray-800 rounded-xl max-w-md border border-gray-700 shadow-lg hover:shadow-xl transition-all duration-200">
       {/* Header */}
       <div className="flex items-center justify-between mb-3">
         {/* Icon */}
-        <div className="flex items-center justify-center w-10 h-10 rounded-full bg-gray-800">
+        <div className="flex items-center justify-center w-10 h-10 rounded-full bg-gray-700">
           {getIcon(props.type)}
         </div>
         {/* Title */}
@@ -71,12 +71,12 @@ export const Card: FC<cardProps> = (props) => {
           {props.title}
         </h2>
         {/* Actions */}
-        <div className="flex gap-3 text-gray-400 hover:text-gray-200 cursor-pointer">
-          <button aria-label="Share">
+        <div className="flex gap-3 text-gray-400">
+          <button className="hover:text-gray-200 transition-colors" aria-label="Share">
             <Share className="w-5 h-5" />
           </button>
-          <button aria-label="Delete">
-            <Delete className="w-5 h-5 text-red-500 hover:text-red-400" />
+          <button className="text-red-500 hover:text-red-400 transition-colors" aria-label="Delete">
+            <Delete className="w-5 h-5" />
           </button>
         </div>
       </div>
