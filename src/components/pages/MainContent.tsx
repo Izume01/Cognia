@@ -1,17 +1,16 @@
 import { Button } from '../ui/button';
 import { Card } from './Card';
-<div className="absolute top-0 z-[-2] h-screen w-screen bg-neutral-950 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))]"></div>
+
+export const MainContent = ({ ShareOpenHandler, AddOpenHandler}: { ShareOpenHandler: () => void, AddOpenHandler: () => void }) => {
 
 
-export const MainContent = () => {
   return (
     <div className="flex-1 min-h-screen overflow-y-auto bg-gray-900 text-gray-300 px-4 sm:px-6 lg:px-8 py-6 space-y-8 relative">
       {/* 👋 Welcome Message */}
-      
       <header className="space-y-1 mt-5">
-        <h1 className="text-3xl font-semibold text-white">Welcome back, Shrey! 👋</h1>
-        <p className="text-gray-400 text-sm">Here are your notes for today. Stay sharp! ⚡</p>
-      </header> 
+        <h1 className="text-3xl font-semibold text-white">Welcome back, Sel! 👋</h1>
+        <p className="text-gray-400 text-lg">Here are your notes for today. Stay sharp! ⚡</p>
+      </header>
 
       {/* 🔘 Buttons & Heading */}
       <section className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
@@ -20,15 +19,17 @@ export const MainContent = () => {
         <div className="flex gap-3">
           <Button
             variant="outline"
-            className="bg-gray-800 text-gray-200 border border-gray-700 hover:bg-gray-700"
+            className="bg-gray-800 text-gray-200 border border-gray-700 hover:bg-gray-700 hover:text-white"
+            onClick={AddOpenHandler}
           >
-            ➕ Add Note
+            ➕ Add Content
           </Button>
           <Button
             variant="outline"
-            className="bg-gray-800 text-gray-200 border border-gray-700 hover:bg-gray-700"
+            className="bg-gray-800 text-gray-200 border border-gray-700 hover:bg-gray-700 hover:text-white"
+            onClick={ShareOpenHandler}
           >
-            🔗 Add Link
+            🔗 Share Space
           </Button>
         </div>
       </section>
@@ -87,5 +88,5 @@ export const MainContent = () => {
       </section>
     </div>
   );
-};  
+};
 
